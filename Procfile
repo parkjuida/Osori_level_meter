@@ -1,1 +1,1 @@
-web: gunicorn Osori_level_meter.wsgi --log-file -
+web: python manage.py runserver 0.0.0.0:5000
