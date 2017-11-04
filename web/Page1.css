@@ -1,0 +1,44 @@
+#level_meter_users {
+	position : relative;
+  width : 90%;
+  height : 700px;
+  margin : 0 0 5% 5%;
+  background-color : red;
+  border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#level_meter_users li {
+  display: block;
+	width: calc(100%-12);
+	height: 45px;
+	padding: 6px 12px;
+	font-size: 24px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#level_meter_users li:hover {
+  background : #eee;
+}
+
+#big {
+  position : relative;
+  width : 90%;
+  height : 150px;
+  margin : 0 0 5% 5%;
+  background-color: blue;
+  border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#big h1 {
+  font-size : 50px;
+  position : absolute;
+  left : 35%;
+  color : brown;
+}
