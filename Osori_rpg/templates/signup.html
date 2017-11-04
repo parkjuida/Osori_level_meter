@@ -20,18 +20,18 @@
 <body>
 <div class="container">
 
-    <form method="post" class="form-signin" action="/accounts/login/">{% csrf_token %}
+    <form method="post" class="form-signin" action="/signup/">{% csrf_token %}
         <h2 class="form-signin-heading">Please sign up</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="text" name="username" id="inputEmail" class="form-control" placeholder="ID" required=""
                autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required=""
+        <input type="password" name="password1" id="inputPassword" class="form-control" placeholder="Password" required=""
                autofocus="">
         <label for="inputPasswordCheck" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPasswordCheck" class="form-control" placeholder="Password 확인"
+        <input type="password" name="password2" id="inputPasswordCheck" class="form-control" placeholder="Password 확인"
                required="">
-        <a class="btn btn-lg btn-primary btn-block" href="/signup" role="button" type="submit">Sign up</a>
+        <button class="btn btn-lg btn-primary btn-block" role="button" type="submit">Sign up</button>
     </form>
 
 </div>

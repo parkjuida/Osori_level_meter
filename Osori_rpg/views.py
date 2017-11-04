@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
+from django.contrib.auth import authenticate, login
 
 import requests
 import json
@@ -119,15 +120,19 @@ class User_List(View):
 
 class Signup(View):
     def get(self, request):
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
+
+        return render(request, 'signup.html', {})
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-        return render(request, 'signup.html', {'form': form})
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 != password2:
+            return ".."
+        if username is not None:
+            user = User.objects.create(username=username, password=password1)
+            return redirect('signin')
+        return render(request, 'signup.html', {})
 
 
 class Signin(View):
@@ -142,9 +147,9 @@ class Signin(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                redirect('/')
+                return redirect('/')
             else:
-                redirect('/signin')
+                return redirect('/')
         except:
             return render(request, 'login.html', {})
 

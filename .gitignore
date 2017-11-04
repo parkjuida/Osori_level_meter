@@ -7,7 +7,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.sqlite3
 *.pyc
 *.xml
 
