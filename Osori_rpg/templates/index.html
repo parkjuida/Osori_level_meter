@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <title>오소리 레벨 미터기</title>
+</head>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-5 float-left">Welcome To Osori 레벨 미터기</h1>
+        <form method="get" action="{% url 'update_info'%}" class="form-signin float-right">
+            <button class="btn btn-primary btn-lg">Update</button>
+        </form>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>level</th>
+                <th>exp</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for member_info in member_infos %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><img src="{% static 'img/' %}level{{member_info.level}}.png" width="32.5" height="45"/></td>
+                <td><a href="{% url 'contribute_info'%}?id={{member_info.user.username}}">{{member_info.user.username}}</a></td>
+                <td>{{member_info.level}}</td>
+                <td>{{member_info.exp}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer>
+    <p style="font-size: 5px; text-align: center;">제작자 : 박준형, 이영식, 박성환</p>
+</footer>
+</html>
