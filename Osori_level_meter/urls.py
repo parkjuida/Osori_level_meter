@@ -17,7 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', admin.site.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'', include('Osori_rpg.urls')),

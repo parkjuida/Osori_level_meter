@@ -7,7 +7,10 @@ from Osori_rpg.forms import UserForm
 class User_List(View):
     def get(self, request):
         user_list = User.objects.all()
-        return render(request, 'list.html', {'user_list': user_list})
+        username = None
+        if request.user.is_authenticated():
+            username = request.user.username
+        return render(request, 'list.html', {'user_list': user_list, 'username': username})
 
 class Signup(View):
     def get(self, request):
@@ -20,6 +23,20 @@ class Signup(View):
             form.save()
             return redirect('/')
         return render(request, 'signup.html', {'form': form})
+
+class Signin(View):
+    def get(self, request):
+        return render(request, 'login.html', {})
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            redirect('/')
+        else:
+            return "Invalid User"
 
 class Room_visit(View):
     def get(self, request):
