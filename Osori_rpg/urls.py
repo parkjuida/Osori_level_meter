@@ -23,7 +23,7 @@ from Osori_rpg import views
 urlpatterns = [
     url(r'^$', views.index, name='index_page'),
     url(r'^contribute_info/$', views.contribute_info, name='contribute_info'),
-    url(r'^contribute_info/$', views.update_info, name='update_info'),
+    url(r'^update_info/$', views.update_info, name='update_info'),
     url(r'^signup/$', views.Signup.as_view()),
     url(r'^signin/$', views.Signin.as_view()),
     url(r'^exp_request/$', views.ExpRequest.as_view()),

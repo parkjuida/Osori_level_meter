@@ -24,7 +24,16 @@ def index(request):
 
 # Create your views here.
 def contribute_info(request):
+
     id = request.GET['id']
+
+    print(id)
+
+    return render(request, 'contribute_info.html')
+
+
+# Create your views here.
+def update_info(request):
 
     list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?\
         access_token=6a49e18d2cf83edf2d8717b42517fccec77d1e6f'
@@ -60,15 +69,9 @@ def contribute_info(request):
                     continue
 
     for id in commit_counts:
-        print(id + ":" + str(commit_counts[id]))
-
-    return render(request, 'contribute_info.html')
-
-
-# Create your views here.
-def update_info(request):
-
-    # 업데이트 하자
+        member = Profile.objects.get(username=contribute_info['login'])
+        member.git_commit = commit_counts[contribute_info['login']]
+        member.save()
 
     return redirect('index_page')
 
