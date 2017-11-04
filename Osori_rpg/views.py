@@ -66,7 +66,7 @@ class Contribution(View):
     def post(self, request):
         pass
 
-class Login_counter(View)
+class Login_counter(View):
     def get(self, request):
         pass
 
@@ -98,9 +98,15 @@ class ExpRequest(View):
 
 class ExpRequestAccept(View):
     def get(self, request):
-        expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
-
-        return render(request, 'exp_request_list.html', {'expRequestList':expRequests})
+        try:
+            pk = request.GET['pk']
+            expRequest = ExpRequestModel.objects.get(pk=pk)
+            expRequest.delete()
+            expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
+            return render(request, 'exp_request_list.html', {'expRequestList': expRequests})
+        except:
+            expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
+        return render(request, 'exp_request_list.html', {'expRequestList': expRequests})
 
     def post(self, request):
         pk = request.POST['pk']
@@ -127,7 +133,4 @@ class ExpRequestAccept(View):
         return redirect('/exp_request_list')
 
     def delete(self, request):
-        pk = request.GET['pk']
-        expRequest = ExpRequestModel.objects.get(pk=pk)
-        expRequest.delete()
         return redirect('/exp_request_list')
