@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!doctype html>
-<html lang="ko">
+<body lang="ko">
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
@@ -17,6 +17,18 @@
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <title>오소리 레벨 미터기</title>
 </head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'signin'%}">로그인</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'signup'%}">회원가입</a>
+        </li>
+    </ul>
+</nav>
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-5 float-left">Welcome To Osori 레벨 미터기</h1>
@@ -42,7 +54,9 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td><img src="{% static 'img/' %}level{{member_info.level}}.png" width="32.5" height="45"/></td>
-                <td><a href="{% url 'contribute_info'%}?id={{member_info.user.username}}">{{member_info.user.username}}</a></td>
+                <td>
+                    <a href="{% url 'contribute_info'%}?id={{member_info.user.username}}">{{member_info.user.username}}</a>
+                </td>
                 <td>{{member_info.level}}</td>
                 <td>{{member_info.exp}}</td>
             </tr>
@@ -54,4 +68,5 @@
 <footer>
     <p style="font-size: 5px; text-align: center;">제작자 : 박준형, 이영식, 박성환</p>
 </footer>
+</body>
 </html>
