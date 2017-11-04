@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/Page1.css' %}">
+    <title>레벨 미터기</title>
+</head>
+<div id="big">
+    <h1>레벨 미터기</h1>
+</div>
+<div id="level_meter_users">
+    {% for member_info in member_infos %}
+    <li>{{ forloop.counter }} <a href="{% url 'contribute_info'%}">member_info.user.username</a> <img src="level{{member_info.level}}.png" width="32.5" height="45" /> {{member_info.exp}}</li>
+	{% endfor %}
+</div>
+<footer>
+    <h3>제작자 : 박준형, 이영식, 박성환</h3>
+</footer>
+</html>
