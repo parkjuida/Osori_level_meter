@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for expRequest in expRequestList %}
+        <form action="/exp_request_list/">{% csrf_token %}
+            <input name="pk" value="{{expRequest.pk}}">
+            <input name="owner" value="{{expRequest.owner}}">
+            <input name="option" value="{{expRequest.options}}">
+            <p>{{expRequest.spec}}</p>
+        <button type="submit" formmethod="post">승인</button>
+        <button type="submit" formmethod="DELETE">거절</button>
+        </form>
+    {% endfor %}
+
+</body>
+</html>

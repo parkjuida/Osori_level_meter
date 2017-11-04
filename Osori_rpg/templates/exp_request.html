@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {{user}}
+    <form method="post" action="/exp_request/">{% csrf_token %}
+        <input list="options" name="option">
+            <datalist id="options">
+                <option value="Room_Visit"></option>
+                <option value="Event_Visit"></option>
+                <option value="Contribution"></option>
+            </datalist>
+        <input type="text" name="spec">
+        <button type="submit">요청</button>
+    </form>
+</body>
+</html>

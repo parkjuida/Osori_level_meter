@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+    <link rel="stylesheet" href="login.css">
+		<title>회원가입 & 로그인</title>
+	</head>
+	<body>
+		<form method="post" action="/accounts/login/">{% csrf_token %}
+		<div id = "left">
+			<div id = "signin_id">
+				<li> ID </li>
+				<input type = "text" name="username" id = "signin_real">
+		</div>
+			<div id = "signin_pwd">
+				<li> PASSWORD </li>
+				<input type = "text" name="password" id = "signin_pwdreal">
+			</div>
+			<button id = "signin_button"> LOGIN </button>
+		</div>
+		</form>
+<div id = "right">
+</div>
+	</body>
+</html>
