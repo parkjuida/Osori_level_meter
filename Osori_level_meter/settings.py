@@ -25,7 +25,7 @@ SECRET_KEY = 'hd_%3jk_f(u57-asmp)8-jl=ltyms40d7abqyq!a+4e!=#hj6l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
