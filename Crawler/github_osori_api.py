@@ -7,28 +7,11 @@ def get_osori_commit_counts_all():
     list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?\
     access_token=6a49e18d2cf83edf2d8717b42517fccec77d1e6f'
 
-    # params = {'key1': 'value1', 'key2': 'value2'}
-
     # GET
     response = requests.get(list_osori_repo_url)
     repo_infos = json.loads(response.text)
-    # Response, status etc
 
-    # print(response.status_code)
-    # print("================================================")
-    # print(repo_infos)
-
-    # GET with params in URL
-    # r = requests.get(url, params=params)
-
-    # POST with form-encoded data
-    # r = requests.post(url, data=params)
-
-    # POST with JSON
-    # import json
-    # r = requests.post(url, data=json.dumps(payload))
-
-    commit_counts = {'name': 1}
+    commit_counts = {}
 
     print("총 Repository 개수 : %d" % len(repo_infos))
 

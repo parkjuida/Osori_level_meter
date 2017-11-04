@@ -19,7 +19,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index_page'),
-    url(r'^$', views.contribute_info, name='contribute_info'),
+    url(r'^contribute_info/$', views.contribute_info, name='contribute_info'),
+url(r'^contribute_info/$', views.update_info, name='update_info'),
     url(r'^signup/$', views.Signup.as_view()),
     url(r'^signin/$', views.Signin.as_view())
 ]
