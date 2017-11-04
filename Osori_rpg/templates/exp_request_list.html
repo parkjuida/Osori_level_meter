@@ -2,18 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+    <title>오소리 경험치</title>
 </head>
 <body>
+    <h1 class="ui red header">경험치 요청 목록</h1>
     {% for expRequest in expRequestList %}
-        <form action="/exp_request_list/">{% csrf_token %}
-            <input name="pk" value="{{expRequest.pk}}">
-            <input name="owner" value="{{expRequest.owner}}">
-            <input name="option" value="{{expRequest.options}}">
-            <p>{{expRequest.spec}}</p>
-        <button type="submit" formmethod="post">승인</button>
-        <button type="submit" formmethod="DELETE">거절</button>
-        </form>
+
+            <form class="ui form" action="/exp_request_list/">{% csrf_token %}
+                <label>PK</label>
+                <input class="ui input" name="pk" value="{{expRequest.pk}}">
+                <label>Owner</label>
+                <input class="ui input" name="owner" value="{{expRequest.owner}}">
+                <label>Option</label>
+                <input class="ui input" name="option" value="{{expRequest.options}}">
+                <label>Reason</label>
+                <p>{{expRequest.spec}}</p>
+            <button type="submit" formmethod="post">승인</button>
+            <button type="submit" formmethod="DELETE">거절</button>
+            </form>
+
     {% endfor %}
 
 </body>
