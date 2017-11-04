@@ -61,7 +61,7 @@ def contribute_info(request):
 # Create your views here.
 def update_info(request):
 
-    list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?access_token=5f17c0742d9ee2a30214cc42a6bcd55e75fdefd3'
+    list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?access_token=b03eb1fe6069abaf4e7ee7f4e2d19c2d4d642691'
 
     # GET
     response = requests.get(list_osori_repo_url)
@@ -77,7 +77,7 @@ def update_info(request):
         except:
             continue
 
-        contribute_info_url = "https://api.github.com/repos/HyOsori/%s/contributors?access_token=5f17c0742d9ee2a30214cc42a6bcd55e75fdefd3" % repo_info['name']
+        contribute_info_url = "https://api.github.com/repos/HyOsori/%s/contributors?access_token=b03eb1fe6069abaf4e7ee7f4e2d19c2d4d642691" % repo_info['name']
         response = requests.get(contribute_info_url)
 
         contribute_infos = json.loads(response.text)
@@ -137,12 +137,16 @@ class Signin(View):
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            redirect('/')
-        else:
-            return "Invalid User"
+
+        try:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                redirect('/')
+            else:
+                redirect('/signin')
+        except:
+            return render(request, 'login.html', {})
 
 
 class Room_visit(View):
