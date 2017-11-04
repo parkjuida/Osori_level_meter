@@ -47,7 +47,7 @@ class Contribution(View):
     def post(self, request):
         pass
 
-class Login_counter(View):
+class Login_counter(View)
     def get(self, request):
         pass
 
