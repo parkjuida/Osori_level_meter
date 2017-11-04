@@ -211,8 +211,13 @@ class ExpRequest(View):
 
 class ExpRequestAccept(View):
     def get(self, request):
-        expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
-
+        try:
+            pk = request.GET['pk']
+            expRequest = ExpRequestModel.objects.get(pk=pk)
+            expRequest.delete()
+            return redirect('/exp_request_list')
+        except:
+            expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
         return render(request, 'exp_request_list.html', {'expRequestList':expRequests})
 
     def post(self, request):
@@ -240,7 +245,4 @@ class ExpRequestAccept(View):
         return redirect('/exp_request_list')
 
     def delete(self, request):
-        pk = request.GET['pk']
-        expRequest = ExpRequestModel.objects.get(pk=pk)
-        expRequest.delete()
-        return redirect('/exp_request_list')
+        pass
