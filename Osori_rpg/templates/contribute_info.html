@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load staticfiles %}
+<html>
+    <head>
+        <style type="text/css">
+        #chart1 {
+            width: 99%;
+            height: 99%;
+            display: visible;
+        }
+        </style>
+        <script type="text/javascript" src="{% static 'js/jquery-3.2.1.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/flotr2.min.js' %}"></script>
+    </head>
+    <body>
+        <div id="chart1"></div>
+        <script type="text/javascript">
+            (function basic_radar(container) {
+                // Fill series s1 and s2.
+                var graph, ticks,
+                    s1 = { label : '{{member_info.user.username}}', data : [
+                        [0, {{member_info.git_commit}}],
+                        [1, {{member_info.room_visit}}],
+                        [2, {{member_info.event_visit}}],
+                        [3, {{member_info.contribution}}],
+                        [4, {{member_info.login_counter}}]
+                    ]},
 
-</body>
+                // Radar Labels
+                ticks = [
+                    [0, "오픈소스 활동"],
+                    [1, "동아리방 방문"],
+                    [2, "동아리 행사참여"],
+                    [3, "동아리 임원활동"],
+                    [4, "웹페이지 로그인"]
+                ];
+
+                // Draw the graph.
+                graph = Flotr.draw(container, [ s1 ], {
+                    radar : { show : true},
+                    grid  : { circular : true, minorHorizontalLines : true},
+                    yaxis : { min : 0, max : {{max_activity}}, minorTickFreq : {{max_activity}} / 5},
+                    xaxis : { ticks : ticks}
+                });
+            })(document.getElementById("chart1"));
+        </script>
+    </body>
 </html>

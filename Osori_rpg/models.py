@@ -25,6 +25,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+
 class ExpRequest(models.Model):
     ExpOptions = (
         ('Room_Visit', 'Room_Visit'),

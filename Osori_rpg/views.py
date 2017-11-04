@@ -7,9 +7,30 @@ from django.db.models import Q
 import requests
 import json
 
-from Osori_rpg.forms import UserForm
 from .models import ExpRequest as ExpRequestModel
 from .models import Profile
+
+
+def algorithm(member):
+
+    _commit     = member.git_commit     # 오픈소스 활동 횟수
+    _visits     = member.room_visit     # 동방 방문 횟수
+    _parvisits  = member.event_visit    # 행사 참여 횟수
+    _cont       = member.contribution   # 임원진 활동 기여
+    _login      = member.login_counter  # 동아리 웹사이트 로그인 횟수
+
+    member.exp = _commit * 10 + _visits * 20 + _parvisits * 50 + _cont * 20 + _login * 10
+
+    if member.exp < 250:
+        member.level = 1
+    elif 250 <= member.exp and member.exp < 950:
+        member.level = 2
+    elif 950 <= member.exp and member.exp < 2450:
+        member.level = 3
+    elif 2450 <= member.exp and member.exp < 5450:
+        member.level = 4
+    else:
+        member.level = 5
 
 
 # Create your views here.
@@ -25,18 +46,22 @@ def index(request):
 # Create your views here.
 def contribute_info(request):
 
-    id = request.GET['id']
+    username = request.GET['id']
 
-    print(id)
+    user = User.objects.get(username=username)
 
-    return render(request, 'contribute_info.html')
+    member_info = Profile.objects.get(user=user)
+
+    max_activity = max(member_info.git_commit, member_info.room_visit, member_info.event_visit,
+                       member_info.contribution, member_info.login_counter)
+
+    return render(request, 'contribute_info.html', {'member_info': member_info, 'max_activity': max_activity})
 
 
 # Create your views here.
 def update_info(request):
 
-    list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?\
-        access_token=6a49e18d2cf83edf2d8717b42517fccec77d1e6f'
+    list_osori_repo_url = 'https://api.github.com/orgs/HyOsori/repos?access_token=5f17c0742d9ee2a30214cc42a6bcd55e75fdefd3'
 
     # GET
     response = requests.get(list_osori_repo_url)
@@ -52,26 +77,33 @@ def update_info(request):
         except:
             continue
 
-        contribute_info_url = "https://api.github.com/repos/HyOsori/%s/contributors?access_token=\
-            6a49e18d2cf83edf2d8717b42517fccec77d1e6f" % repo_info['name']
+        contribute_info_url = "https://api.github.com/repos/HyOsori/%s/contributors?access_token=5f17c0742d9ee2a30214cc42a6bcd55e75fdefd3" % repo_info['name']
         response = requests.get(contribute_info_url)
 
         contribute_infos = json.loads(response.text)
         for contribute_info in contribute_infos:
             try:
                 commit_counts[contribute_info['login']] += contribute_info['contributions']
-                # print(contribute_info['login'])
-                # print(contribute_info['contributions'])
             except:
                 try:
                     commit_counts.update({contribute_info['login']: contribute_info['contributions']})
                 except:
                     continue
 
-    for id in commit_counts:
-        member = Profile.objects.get(username=contribute_info['login'])
-        member.git_commit = commit_counts[contribute_info['login']]
-        member.save()
+    print(commit_counts)
+
+    for username in commit_counts:
+        try:
+            user = User.objects.get(username=username)
+            member = Profile.objects.get(user=user)
+            member.git_commit = commit_counts[username]
+
+            algorithm(member)
+
+            member.save()
+            print(username + ": %d" % member.git_commit)
+        except:
+            continue
 
     return redirect('index_page')
 
