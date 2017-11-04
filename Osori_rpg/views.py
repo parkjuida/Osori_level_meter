@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Q
 
 import requests
 import json
 
 from Osori_rpg.forms import UserForm
+from .models import ExpRequest as ExpRequestModel
 from .models import Profile
 
 
@@ -151,3 +153,59 @@ class Level(View):
 class Exp(View):
     def get(self, request):
         pass
+
+
+class ExpRequest(View):
+    def get(self, request):
+        user = None
+        if request.user.is_authenticated():
+            user = request.user
+        if user is None:
+            return "User is None"
+
+        return render(request, 'exp_request.html', {'user': user})
+
+    def post(self, request):
+        option = request.POST['option']
+        spec = request.POST['spec']
+
+        expRequest = ExpRequestModel.objects.create(owner=request.user, options=option, spec=spec)
+        expRequest.save()
+        return redirect('/')
+
+
+class ExpRequestAccept(View):
+    def get(self, request):
+        expRequests = ExpRequestModel.objects.filter(~Q(owner=request.user))
+
+        return render(request, 'exp_request_list.html', {'expRequestList':expRequests})
+
+    def post(self, request):
+        pk = request.POST['pk']
+        owner = request.POST['owner']
+        option = request.POST['option']
+        user = User.objects.get(username=owner)
+        profile = Profile.objects.get(user=user)
+        print(profile)
+        print(option)
+        if option == 'Room_Visit':
+            print('RV')
+            profile.room_visit = profile.room_visit + 1
+            profile.save()
+        if option == 'Event_Visit':
+            print('EV')
+            profile.event_visit = profile.event_visit + 1
+            profile.save()
+        if option == 'Contribution':
+            print('CB')
+            profile.contribution = profile.contribution + 1
+            profile.save()
+        expRequest = ExpRequestModel.objects.get(pk=pk)
+        expRequest.delete()
+        return redirect('/exp_request_list')
+
+    def delete(self, request):
+        pk = request.GET['pk']
+        expRequest = ExpRequestModel.objects.get(pk=pk)
+        expRequest.delete()
+        return redirect('/exp_request_list')

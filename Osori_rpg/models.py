@@ -24,3 +24,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class ExpRequest(models.Model):
+    ExpOptions = (
+        ('Room_Visit', 'Room_Visit'),
+        ('Event_Visit', 'Event_Visit'),
+        ('Contribution', 'Contribution'),
+    )
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    options = models.CharField(max_length=100, choices=ExpOptions)
+    spec = models.TextField()
