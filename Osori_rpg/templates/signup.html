@@ -8,8 +8,11 @@
     <h1>Sign up</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <label>이름</label>{{ form.username }}
+        <label>비밀번호</label>{{ form.password1 }}
+        <label>비밀번호 확인</label>{{ form.password2 }}
         <button type="submit">Sign up</button>
     </form>
+
 </body>
 </html>

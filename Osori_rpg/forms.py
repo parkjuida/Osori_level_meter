@@ -1,5 +1,5 @@
 from django import forms
-from Osori_rpg.models import Profile
+from Osori_rpg.models import Profile, ExpRequest
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
